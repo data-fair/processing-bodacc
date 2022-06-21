@@ -4,8 +4,8 @@ const decompress = require('decompress')
 const dayjs = require('dayjs')
 const exec = require('child-process-promise').exec
 
-module.exports = async (pluginConfig, tmpDir = 'data', axios, log, years) => {
-  for (const year of years) {
+module.exports = async (pluginConfig, processingConfig, tmpDir = 'data', axios, log) => {
+  for (const year of processingConfig.annee) {
     if (dayjs(year.toString()).diff('2016', 'year') > 0) {
       let firstUrl = null
       let urlLine = null
