@@ -1,0 +1,127 @@
+[
+    {
+        "key": "typePers",
+        "title": "typePers",
+        "description": "typePers",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_pays",
+        "title": "Pays Personnes",
+        "description": "adressePers_pays",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_numeroVoie",
+        "title": "Numero Voie Personnes",
+        "description": "adressePers_numeroVoie",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_typeVoie",
+        "title": "Type Voie Personnes",
+        "description": "adressePers_typeVoie",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_nomVoie",
+        "title": "Nom Voie Personnes",
+        "description": "adressePers_nomVoie",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_complGeographique",
+        "title": "Complément adresse Personnes",
+        "description": "adressePers_complGeographique",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_codePostal",
+        "title": "Code Postal Personnes",
+        "description": "adressePers_codePostal",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_ville",
+        "title": "Ville Personnes",
+        "description": "adressePers_ville",
+        "type": "string"
+    },
+    {
+        "key": "immatriculation_numeroIdentification",
+        "title": "Numero Identification ",
+        "type": "string"
+    },
+    {
+        "key": "denomination",
+        "title": "denomination",
+        "description": "denomination",
+        "type": "string"
+    },
+    {
+        "key": "formeJuridique",
+        "title": "formeJuridique",
+        "description": "formeJuridique",
+        "type": "string"
+    },
+    {
+        "key": "sigle",
+        "title": "sigle",
+        "description": "sigle",
+        "type": "string"
+    },
+    {
+        "key": "immatriculation",
+        "title": "immatriculation",
+        "description": "immatriculation",
+        "type": "string"
+    },
+    {
+        "key": "siren",
+        "title": "siren",
+        "description": "siren",
+        "type": "number"
+    },
+    {
+        "key": "typeActe",
+        "title": "typeActe",
+        "description": "typeActe",
+        "type": "string"
+    },
+    {
+        "key": "dateCloture",
+        "title": "dateCloture",
+        "description": "dateCloture",
+        "type": "string"
+    },
+    {
+        "key": "descriptif",
+        "title": "descriptif",
+        "description": "descriptif",
+        "type": "string"
+    },
+    {
+        "key": "categorie",
+        "title": "categorie",
+        "description": "categorie",
+        "type": "string"
+    },
+    {
+        "key": "dateEffet",
+        "title": "dateEffet",
+        "description": "dateEffet",
+        "type": "string"
+    },
+    {
+        "key": "dateCommencementActivite",
+        "title": "dateCommencementActivite",
+        "description": "dateCommencementActivite",
+        "type": "string"
+    },
+    {
+        "key": "dateCessationActivite",
+        "title": "dateCessationActivite",
+        "description": "dateCessationActivite",
+        "type": "string"
+    }
+]

@@ -1,0 +1,50 @@
+[
+    {
+        "key": "parution",
+        "title": "parution",
+        "descripion": "parution",
+        "type": "string"
+    },
+    {
+        "key": "dateParution",
+        "title": "dateParution",
+        "descripion": "dateParution",
+        "type": "string"
+    },
+    {
+        "key": "type",
+        "title": "type",
+        "descripion": "type",
+        "type": "string"
+    },
+    {
+        "key": "_id",
+        "title": "_id",
+        "descripion": "_id",
+        "type": "string"
+    },
+    {
+        "key": "numeroAnnonce",
+        "title": "numeroAnnonce",
+        "descripion": "numeroAnnonce",
+        "type": "string"
+    },
+    {
+        "key": "nojo",
+        "title": "nojo",
+        "descripion": "nojo",
+        "type": "string"
+    },
+    {
+        "key": "numeroDepartement",
+        "title": "numeroDepartement",
+        "descripion": "numeroDepartement",
+        "type": "string"
+    },
+    {
+        "key": "tribunal",
+        "title": "tribunal",
+        "descripion": "tribunal",
+        "type": "string"
+    }
+]

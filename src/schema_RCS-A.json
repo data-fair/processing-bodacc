@@ -1,0 +1,218 @@
+[
+    {
+        "key": "origineFonds",
+        "title": "Origine fonds",
+        "description": "origineFonds",
+        "type": "string"
+    },
+    {
+        "key": "activite",
+        "title": "activite",
+        "description": "activite",
+        "type": "string"
+    },
+    {
+        "key": "adresseEtab_pays",
+        "title": "Pays Etablissement",
+        "description": "Pays de l'établissement principal",
+        "type": "string"
+    },
+    {
+        "key": "adresseEtab_numeroVoie",
+        "title": "Numero voie Etablissement",
+        "description": "adresseEtab_numeroVoie",
+        "type": "string"
+    },
+    {
+        "key": "adresseEtab_typeVoie",
+        "title": "Type voie Etablissement",
+        "description": "adresseEtab_typeVoie",
+        "type": "string"
+    },
+    {
+        "key": "adresseEtab_nomVoie",
+        "title": "Nom voie Etablissement",
+        "description": "adresseEtab_nomVoie",
+        "type": "string"
+    },
+    {
+        "key": "adresseEtab_complGeographique",
+        "title": "Complément adresse Etablissement",
+        "description": "adresseEtab_complGeographique",
+        "type": "string"
+    },
+    {
+        "key": "adresseEtab_codePostal",
+        "title": "Code Postal Etablissement",
+        "description": "adresseEtab_codePostal",
+        "type": "string"
+    },
+    {
+        "key": "adresseEtab_ville",
+        "title": "Ville Etablissement",
+        "description": "adresseEtab_ville",
+        "type": "string"
+    },
+    {
+        "key": "qualite",
+        "title": "qualite",
+        "description": "qualite",
+        "type": "string"
+    },
+    {
+        "key": "siege",
+        "title": "siege",
+        "description": "siege",
+        "type": "boolean"
+    },
+    {
+        "key": "prixFonds",
+        "title": "prixFonds",
+        "description": "prixFonds",
+        "type": "string"
+    },
+    {
+        "key": "capital_devise",
+        "title": "Capital Devise",
+        "description": "capital_devise",
+        "type": "string"
+    },
+    {
+        "key": "capital_montant",
+        "title": "Capital Montant",
+        "description": "capital_montant",
+        "type": "number"
+    },
+    {
+        "key": "capital_capitalVariable",
+        "title": "Capital varialble",
+        "description": "capital_capitalVariable",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_pays",
+        "title": "Pays Personnes",
+        "description": "adressePers_pays",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_numeroVoie",
+        "title": "Numero Voie Personnes",
+        "description": "adressePers_numeroVoie",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_typeVoie",
+        "title": "Type Voie Personnes",
+        "description": "adressePers_typeVoie",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_nomVoie",
+        "title": "Nom Voie Personnes",
+        "description": "adressePers_nomVoie",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_complGeographique",
+        "title": "Complément adresse Personnes",
+        "description": "adressePers_complGeographique",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_codePostal",
+        "title": "Code Postal Personnes",
+        "description": "adressePers_codePostal",
+        "type": "string"
+    },
+    {
+        "key": "adressePers_ville",
+        "title": "Ville Personnes",
+        "description": "adressePers_ville",
+        "type": "string"
+    },
+    {
+        "key": "immatriculation_numeroIdentification",
+        "title": "Numero Identification ",
+        "description": "immatriculation_numeroIdentification",
+        "type": "string"
+    },
+    {
+        "key": "immatriculation_codeRCS",
+        "title": "Code RCS",
+        "description": "immatriculation_codeRCS",
+        "type": "string"
+    },
+    {
+        "key": "immatriculation_nomGreffeImmat",
+        "title": "Nom greff immatricualation",
+        "description": "immatriculation_nomGreffeImmat",
+        "type": "string"
+    },
+    {
+        "key": "typePers",
+        "title": "typePers",
+        "description": "typePers",
+        "type": "string"
+    },
+    {
+        "key": "nonInscrit",
+        "title": "nonInscrit",
+        "description": "nonInscrit",
+        "type": "string"
+    },
+    {
+        "key": "denomination",
+        "title": "denomination",
+        "description": "denomination",
+        "type": "string"
+    },
+    {
+        "key": "formeJuridique",
+        "title": "formeJuridique",
+        "description": "formeJuridique",
+        "type": "string"
+    },
+    {
+        "key": "administration",
+        "title": "administration",
+        "description": "administration",
+        "type": "string"
+    },
+    {
+        "key": "typeActe:",
+        "title": "typeActe:",
+        "description": "typeActe",
+        "type": "string"
+    },
+    {
+        "key": "dateImmatriculation",
+        "title": "dateImmatriculation",
+        "description": "dateImmatriculation",
+        "type": "string"
+    },
+    {
+        "key": "dateCommencementActivite",
+        "title": "dateCommencementActivite",
+        "description": "dateCommencementActivite",
+        "type": "string"
+    },
+    {
+        "key": "categorie",
+        "title": "categorie",
+        "description": "categorie",
+        "type": "string"
+    },
+    {
+        "key": "dateEffet",
+        "title": "dateEffet",
+        "description": "dateEffet",
+        "type": "string"
+    },
+    {
+        "key": "dateCessationActivite",
+        "title": "dateCessationActivite",
+        "description": "dateCessationActivite",
+        "type": "string"
+    }
+]
