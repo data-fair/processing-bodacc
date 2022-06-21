@@ -56,6 +56,13 @@
           { "const": "modification", "title": "Modifications générales et radiations" },
           { "const": "compte", "title": "Dépôts des comptes annuels" }
         ]
+      },
+      "annee": {
+        "type": "array",
+        "title": "Annees à utiliser",
+        "items": { "type": "integer" },
+        "description": "Laissez vide pour sélectionner le dernier.",
+        "default": [2022]
       }
     }
   }]

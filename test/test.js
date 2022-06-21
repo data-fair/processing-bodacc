@@ -44,7 +44,8 @@ describe('bodacc processing', () => {
       },
       typeFile: 'prevention',
       tmpDir: 'data/tmp',
-      workDir: 'data/work'
+      workDir: 'data/work',
+      annee : [2008]
     }
 
     const log = {
