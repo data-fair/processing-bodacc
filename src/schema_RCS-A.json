@@ -180,8 +180,8 @@
         "type": "string"
     },
     {
-        "key": "typeActe:",
-        "title": "typeActe:",
+        "key": "typeActe",
+        "title": "typeActe",
         "description": "typeActe",
         "type": "string"
     },

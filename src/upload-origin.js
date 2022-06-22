@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const util = require('util')
 
-function displayBytes (aSize) {
+function displayBytes(aSize) {
   aSize = Math.abs(parseInt(aSize, 10))
   if (aSize === 0) return '0 octets'
   const def = [[1, 'octets'], [1000, 'ko'], [1000 * 1000, 'Mo'], [1000 * 1000 * 1000, 'Go'], [1000 * 1000 * 1000 * 1000, 'To'], [1000 * 1000 * 1000 * 1000 * 1000, 'Po']]
@@ -20,36 +20,35 @@ module.exports = async (processingConfig, tmpDir, axios, log, patchConfig) => {
   else type = 'RCS-A'
 
   const datasetSchemaGlobal = require('./schema_global.json')
-  const datasetSchemaType = require(`./schema_${type}.json`)
-  const datasetSchema = {
-    ...datasetSchemaGlobal,
-    ...datasetSchemaType
-  }
-  const formData = new FormData()
+  // const datasetSchemaType = require(`./schema_${type}.json`)
+  // const datasetSchema = datasetSchemaGlobal.concat(datasetSchemaType)
 
+  // console.log(datasetSchema)
+  const formData = new FormData()
   if (processingConfig.datasetMode === 'update') {
     await log.step('Mise à jour du jeu de données')
   } else {
-    formData.append('schema', JSON.stringify(datasetSchema))
+    formData.append('schema', JSON.stringify(datasetSchemaGlobal))
     formData.append('title', processingConfig.dataset.title)
     await log.step('Création du jeu de données')
   }
 
   const filePath = path.join(tmpDir, `${processingConfig.typeFile.toUpperCase()}.csv`)
+  // console.log(processingConfig.typeFile.toUpperCase())
   formData.append('dataset', fs.createReadStream(filePath), { filename: `${processingConfig.typeFile.toUpperCase()}.csv` })
+  // console.log(fs.createReadStream(filePath))
   formData.getLength = util.promisify(formData.getLength)
   const contentLength = await formData.getLength()
   await log.info(`chargement de ${displayBytes(contentLength)}`)
 
-  const dataset = (await axios({
+  const dataset = await axios({
     method: 'post',
     url: (processingConfig.dataset && processingConfig.dataset.id) ? `api/v1/datasets/${processingConfig.dataset.id}` : 'api/v1/datasets',
     data: formData,
     maxContentLength: Infinity,
     maxBodyLength: Infinity,
     headers: { ...formData.getHeaders(), 'content-length': contentLength }
-  })).data
-
+  })
   if (processingConfig.datasetMode === 'update') {
     await log.info(`jeu de donnée mis à jour, id="${dataset.id}", title="${dataset.title}"`)
   } else {

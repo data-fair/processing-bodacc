@@ -3,13 +3,13 @@
         "key": "parution",
         "title": "parution",
         "descripion": "parution",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "dateParution",
         "title": "dateParution",
         "descripion": "dateParution",
-        "type": "string"
+        "type": "date"
     },
     {
         "key": "type",
@@ -27,7 +27,7 @@
         "key": "numeroAnnonce",
         "title": "numeroAnnonce",
         "descripion": "numeroAnnonce",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "nojo",
@@ -47,4 +47,4 @@
         "descripion": "tribunal",
         "type": "string"
     }
-]
+    ]

@@ -681,7 +681,7 @@ function parsePCL (item) {
 
 function processFile (type, stream, tmpDir, processingConfig) {
   return function (name, cb) {
-    console.log(name)
+    // console.log(name)
     parseFile(name, type, tmpDir, (err, items) => {
       if (err) return cb(err)
       async.map(items, (item, cb) => {
@@ -732,9 +732,8 @@ async function processFiles (tmpDir, type, processingConfig, log) {
   const typeHeader = require(`./schema_${type}.json`).map((elem) => elem.key)
 
   const header = globalHeader.concat(typeHeader)
-
+  console.log(globalHeader.length,typeHeader.length,header.length)
   const writeStream = fs.createWriteStream(path.join(tmpDir, processingConfig.typeFile.toUpperCase() + '.csv'))
-  // const header = ('parution,dateParution,type,_id,numeroAnnonce,nojo,numeroDepartement,tribunal') // ,personnes_type,personnes_adresse_pays,personnes_adresse_nomVoie,personnes_adresse_localite,personnes_adresse_codePostal,personnes_adresse_ville,personnes_denomination,personnes_formeJuridique,personnes_sigle,personnes_immatriculation_numeroIdentification,personnes_immatriculation_codeRCS,personnes_immatriculation_nomGreffeImmat,personnes_siren,acte_type,acte_dateCloture,acte_descriptif,acte_categorie,acte_dateEffet,acte_dateCommencementActivite,acte_dateCessationActivite')
   writeStream.write(header.map((elem) => `"${elem}"`).join(',') + endOfLine)
   const rcsFiles = fs.readdirSync(tmpDir).filter(file => file.indexOf(type) === 0 && file.indexOf('.xml') !== -1)
 
@@ -743,14 +742,22 @@ async function processFiles (tmpDir, type, processingConfig, log) {
     processFile(type, writeStream, tmpDir, processingConfig)(file, null)
     return null
   })
+  async function waitForStreamClose (stream) {
+    stream.close()
+    return new Promise((resolve, reject) => {
+      stream.once('close', () => {
+        resolve()
+      })
+    })
+  }
+  await waitForStreamClose(writeStream)
+  console.log(header.length)
 }
 
 module.exports = async (processingConfig, tmpDir, axios, log, patchConfig) => {
-  const stats = { noMatch: 0, match: 0, ambiguous: 0, noUniqueSiren: 0, parsePrixFail: 0, parsePrixSuccess: 0 }
-
+  await log.info('Début du traitement')
   if (processingConfig.typeFile === 'modification') await processFiles(tmpDir, 'RCS-B', processingConfig, log)
   else if (processingConfig.typeFile === 'compte') await processFiles(tmpDir, 'BILAN', processingConfig, log)
   else if (processingConfig.typeFile === 'prevention') await processFiles(tmpDir, 'PCL', processingConfig, log)
   else await processFiles(tmpDir, 'RCS-A', processingConfig, log)
 }
-

@@ -12,7 +12,7 @@ module.exports = async (pluginConfig, processingConfig, tmpDir = 'data', axios, 
   else type = 'RCS-A'
 
   for (const year of processingConfig.annee) {
-    await log.info('Téléchargement des fichers')
+    await log.info('Téléchargement des fichers de type : ' + type)
     if (dayjs(year.toString()).diff('2016', 'year') > 0) {
       let firstUrl = null
       let urlLine = null
@@ -29,7 +29,7 @@ module.exports = async (pluginConfig, processingConfig, tmpDir = 'data', axios, 
       while (linesOld.length) {
         const lines = linesOld.splice(0, 50)
         await getFiles(lines, tmpDir, firstUrl, '.taz', axios, type)
-        await sleep(10000)
+        await sleep(3 * 10000)
         extractFiles(tmpDir, '.taz')
       }
     } else if (dayjs(year.toString()).diff('2008', 'year') >= 0) {
@@ -46,6 +46,7 @@ module.exports = async (pluginConfig, processingConfig, tmpDir = 'data', axios, 
     }
     extractFiles(tmpDir, '.taz')
   }
+  setTimeout(10000)
   fs.readdir(tmpDir, (err, files) => {
     if (err) {
       console.log(err)
@@ -61,29 +62,27 @@ module.exports = async (pluginConfig, processingConfig, tmpDir = 'data', axios, 
             })
             await fs.remove(path.join(tmpDir, file))
           } catch (err) {
-            await fs.remove(path.join(tmpDir, file))
+            console.log(err)
           }
         }
-      }
-      )
+      })
     }
   })
 }
 async function getFiles (lines, tmpDir, url, endName, axios, type) {
   await lines.forEach(async line => {
     if (line.match('href="' + type + '.+?(?=.taz)') !== null) {
-      console.log(line)
-      // const idFile = line.match('href="' + type + '.+?(?=.taz)')[0].replace('href="', '') + endName
-      // const filePath = `${tmpDir}/${idFile}`
-      // console.log(filePath)
-      // const response = await axios({ url: url + idFile, method: 'GET', responseType: 'stream' })
-      // const writer = fs.createWriteStream(path.join(tmpDir, idFile))
-      // await response.data.pipe(writer)
+      const idFile = line.match('href="' + type + '.+?(?=.taz)')[0].replace('href="', '') + endName
+      const filePath = `${tmpDir}/${idFile}`
+      console.log(filePath)
+      const response = await axios({ url: url + idFile, method: 'GET', responseType: 'stream' })
+      const writer = fs.createWriteStream(path.join(tmpDir, idFile))
+      await response.data.pipe(writer)
 
-      // return new Promise((resolve, reject) => {
-      //   writer.on('finish', resolve)
-      //   writer.on('error', reject)
-      // })
+      return new Promise((resolve, reject) => {
+        writer.on('finish', resolve)
+        writer.on('error', reject)
+      })
     }
   })
 }
@@ -99,7 +98,7 @@ function extractFiles (tmpDir, endName) {
           const xmlFilePath = `${tmpDir}/${file.replace(endName, '')}.xml`
           console.log(`Extract ${file} -> ${xmlFilePath}`)
           try {
-            await exec(`tar -C ${filePath} -xkzf ${xmlFilePath}`)
+            await decompress(filePath, tmpDir)
             await fs.remove(path.join(tmpDir, file))
           } catch (err) {
             console.error('Failure to extract', err)
