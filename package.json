@@ -1,6 +1,6 @@
 {
   "name": "@data-fair/processing-bodacc",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Official Bulletin of Civil and Commercial Announcements in France into data-fair datasets",
   "main": "index.js",
   "scripts": {
