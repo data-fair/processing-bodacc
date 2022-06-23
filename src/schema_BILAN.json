@@ -48,11 +48,6 @@
         "type": "string"
     },
     {
-        "key": "immatriculation_numeroIdentification",
-        "title": "Numero Identification ",
-        "type": "string"
-    },
-    {
         "key": "denomination",
         "title": "denomination",
         "description": "denomination",
@@ -71,9 +66,19 @@
         "type": "string"
     },
     {
-        "key": "immatriculation",
-        "title": "immatriculation",
-        "description": "immatriculation",
+        "key": "immatriculation_numeroIdentification",
+        "title": "immatriculation_numeroIdentification",
+        "description": "immatriculation_numeroIdentification",
+        "type": "string"
+    },
+    {
+        "key": "immatriculation_codeRCS",
+        "title": "Numero Identification ",
+        "type": "number"
+    },
+    {
+        "key": "immatriculation_nomGreffeImmat",
+        "title": "Numero Identification ",
         "type": "string"
     },
     {
@@ -92,7 +97,8 @@
         "key": "dateCloture",
         "title": "dateCloture",
         "description": "dateCloture",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "descriptif",
@@ -110,18 +116,21 @@
         "key": "dateEffet",
         "title": "dateEffet",
         "description": "dateEffet",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "dateCommencementActivite",
         "title": "dateCommencementActivite",
         "description": "dateCommencementActivite",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "dateCessationActivite",
         "title": "dateCessationActivite",
         "description": "dateCessationActivite",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     }
 ]

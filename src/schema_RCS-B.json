@@ -232,18 +232,21 @@
         "key": "dateEffet",
         "title": "dateEffet",
         "description": "dateEffet",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "dateCommencementActivite",
         "title": "dateCommencementActivite",
         "description": "dateCommencementActivite",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "dateCessationActivite",
         "title": "dateCessationActivite",
         "description": "dateCessationActivite",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     }
 ]

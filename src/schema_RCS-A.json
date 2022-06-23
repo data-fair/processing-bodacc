@@ -69,7 +69,7 @@
         "key": "prixFonds",
         "title": "prixFonds",
         "description": "prixFonds",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "capital_devise",
@@ -123,12 +123,18 @@
         "key": "adressePers_codePostal",
         "title": "Code Postal Personnes",
         "description": "adressePers_codePostal",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "adressePers_ville",
         "title": "Ville Personnes",
         "description": "adressePers_ville",
+        "type": "string"
+    },
+    {
+        "key": "typePers",
+        "title": "typePers",
+        "description": "typePers",
         "type": "string"
     },
     {
@@ -141,18 +147,12 @@
         "key": "immatriculation_codeRCS",
         "title": "Code RCS",
         "description": "immatriculation_codeRCS",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "immatriculation_nomGreffeImmat",
         "title": "Nom greff immatricualation",
         "description": "immatriculation_nomGreffeImmat",
-        "type": "string"
-    },
-    {
-        "key": "typePers",
-        "title": "typePers",
-        "description": "typePers",
         "type": "string"
     },
     {
@@ -189,13 +189,14 @@
         "key": "dateImmatriculation",
         "title": "dateImmatriculation",
         "description": "dateImmatriculation",
-        "type": "string"
+        "type": "date"
     },
     {
         "key": "dateCommencementActivite",
         "title": "dateCommencementActivite",
         "description": "dateCommencementActivite",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "categorie",
@@ -207,12 +208,14 @@
         "key": "dateEffet",
         "title": "dateEffet",
         "description": "dateEffet",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "dateCessationActivite",
         "title": "dateCessationActivite",
         "description": "dateCessationActivite",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     }
 ]

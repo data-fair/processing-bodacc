@@ -51,12 +51,28 @@
         "key": "adressePers_codePostal",
         "title": "adressePers_codePostal",
         "description": "adressePers_codePostal",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "adressePers_ville",
         "title": "adressePers_ville",
         "description": "adressePers_ville",
+        "type": "string"
+    },
+    {
+        "key": "immatriculation_numeroIdentification",
+        "title": "immatriculation_numeroIdentification",
+        "description": "immatriculation_numeroIdentification",
+        "type": "string"
+    },
+    {
+        "key": "immatriculation_codeRCS",
+        "title": "Numero Identification ",
+        "type": "number"
+    },
+    {
+        "key": "immatriculation_nomGreffeImmat",
+        "title": "Numero Identification ",
         "type": "string"
     },
     {
@@ -69,18 +85,6 @@
         "key": "denomination",
         "title": "denomination",
         "description": "denomination",
-        "type": "string"
-    },
-    {
-        "key": "nom",
-        "title": "nom",
-        "description": "nom",
-        "type": "string"
-    },
-    {
-        "key": "prenom",
-        "title": "prenom",
-        "description": "prenom",
         "type": "string"
     },
     {
@@ -99,7 +103,7 @@
         "key": "siren",
         "title": "siren",
         "description": "siren",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "activite",
@@ -123,7 +127,8 @@
         "key": "jugement_date",
         "title": "jugement_date",
         "description": "jugement_date",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "jugement_complementJugement",
@@ -138,40 +143,47 @@
         "type": "string"
     },
     {
-        "key": "inscriptionRM_numeroIdentificationRM",
-        "title": "inscriptionRM_numeroIdentificationRM",
-        "description": "inscriptionRM_numeroIdentificationRM",
+        "key": "inscription_numeroIdentification",
+        "title": "inscription_numeroIdentification",
+        "description": "inscription_numeroIdentification",
+        "type": "number"
+    },
+    {
+        "key": "inscription_code",
+        "title": "inscription_code",
+        "description": "inscription_code",
         "type": "string"
     },
     {
-        "key": "inscriptionRM_codeRM",
-        "title": "inscriptionRM_codeRM",
-        "description": "inscriptionRM_codeRM",
-        "type": "string"
+        "key": "inscription_numeroDepartement",
+        "title": "inscription_numeroDepartement",
+        "description": "inscription_numeroDepartement",
+        "type": "number"
     },
     {
-        "key": "inscriptionRM_numeroDepartement",
-        "title": "inscriptionRM_numeroDepartement",
-        "description": "inscriptionRM_numeroDepartement",
+        "key": "inscription_nomGreffeImmat",
+        "title": "inscription_nomGreffeImmat",
+        "description": "inscription_nomGreffeImmat",
         "type": "string"
     },
     {
         "key": "parutionAvisPrecedent_dateParution",
         "title": "parutionAvisPrecedent_dateParution",
         "description": "parutionAvisPrecedent_dateParution",
-        "type": "string"
+        "type": "date",
+        "x-refersTo": "http://schema.org/Date"
     },
     {
         "key": "parutionAvisPrecedent_numeroAnnonce",
         "title": "parutionAvisPrecedent_numeroAnnonce",
         "description": "parutionAvisPrecedent_numeroAnnonce",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "parutionAvisPrecedent_parution",
         "title": "parutionAvisPrecedent_parution",
         "description": "parutionAvisPrecedent_parution",
-        "type": "string"
+        "type": "number"
     },
     {
         "key": "parutionAvisPrecedent_type",
@@ -183,12 +195,6 @@
         "key": "parutionAvisPrecedent__id",
         "title": "parutionAvisPrecedent__id",
         "description": "parutionAvisPrecedent__id",
-        "type": "string"
-    },
-    {
-        "key": "personnes",
-        "title": "personnes",
-        "description": "personnes",
         "type": "string"
     },
     {
