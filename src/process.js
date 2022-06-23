@@ -419,13 +419,13 @@ function parseRCSA (item, type) {
     ret.origineFonds = item.etablissements[0].origineFonds
     ret.activite = item.etablissements[0].activite
     if (item.etablissements.adresse) {
-      ret.adresseEtab_pays = item.etablissement[0].adresse.pays
-      ret.adresseEtab_numeroVoie = item.etablissement[0].adresse.numeroVoie
-      ret.adresseEtab_typeVoie = item.etablissement[0].adresse.typeVoie
-      ret.adresseEtab_nomVoie = item.etablissement[0].adresse.nomVoie
-      ret.adresseEtab_complGeographique = item.etablissement[0].adresse.complGeographique
-      ret.adresseEtab_codePostal = item.etablissement[0].adresse.codePostal
-      ret.adresseEtab_ville = item.etablissement[0].adresse.ville
+      ret.adresseEtab_pays = item.etablissement[0].adresse.france.pays
+      ret.adresseEtab_numeroVoie = item.etablissement[0].adresse.france.numeroVoie
+      ret.adresseEtab_typeVoie = item.etablissement[0].adresse.france.typeVoie
+      ret.adresseEtab_nomVoie = item.etablissement[0].adresse.france.nomVoie
+      ret.adresseEtab_complGeographique = item.etablissement[0].adresse.cfrance.omplGeographique
+      ret.adresseEtab_codePostal = item.etablissement[0].adresse.france.codePostal
+      ret.adresseEtab_ville = item.etablissement[0].adresse.france.ville
     }
     ret.qualite = item.etablissements[0].qualite
     ret.siege = item.etablissements[0].siege
@@ -438,16 +438,17 @@ function parseRCSA (item, type) {
     ret.capital_capitalVariable = item.personnes[0].capital ? item.personnes[0].capital.capitalVariable : ''
     if (item.personnes[0].adresse) {
       if (item.personnes[0].adresse.etranger) {
-        ret.adresseSiegeSocial_complGeographique = item.personnes[0].adresse.etranger.adresse
-        ret.adresseSiegeSocial_pays = item.personnes[0].adresse.etranger.pays ? item.personnes[0].adresse.etranger.pays : ''
+        ret.adressePers_complGeographique = item.personnes[0].adresse.etranger.adresse
+        ret.adressePers_pays = item.personnes[0].adresse.etranger.pays ? item.personnes[0].adresse.etranger.pays : item.personnes[0].adresse.pays
+      } else {
+        ret.adressePers_pays = item.personnes[0].adresse.pays
+        ret.adressePers_numeroVoie = item.personnes[0].adresse.france.numeroVoie
+        ret.adressePers_typeVoie = item.personnes[0].adresse.france.typeVoie
+        ret.adressePers_nomVoie = item.personnes[0].adresse.france.nomVoie
+        ret.adressePers_complGeographique = item.personnes[0].adresse.france.complGeographique
+        ret.adressePers_codePostal = item.personnes[0].adresse.france.codePostal
+        ret.adressePers_ville = item.personnes[0].adresse.france.ville
       }
-      ret.adressePers_pays = item.personnes[0].adresse.pays
-      ret.adressePers_numeroVoie = item.personnes[0].adresse.numeroVoie
-      ret.adressePers_typeVoie = item.personnes[0].adresse.typeVoie
-      ret.adressePers_nomVoie = item.personnes[0].adresse.nomVoie
-      ret.adressePers_complGeographique = item.personnes[0].adresse.complGeographique
-      ret.adressePers_codePostal = item.personnes[0].adresse.codePostal
-      ret.adressePers_ville = item.personnes[0].adresse.ville
     }
     ret.typePers = item.personnes[0].type
     ret.nonInscrit = item.personnes[0].nonInscrit ? item.personnes[0].nonInscrit : ''
@@ -460,7 +461,7 @@ function parseRCSA (item, type) {
       ret.immatriculation_nomGreffeImmat = item.personnes[0].immatriculation.nomGreffeImmat
     }
   }
-
+  
   if (ret.typeActe.toUpperCase().includes(type.toUpperCase())) return ret
 }
 function parseRCSB (item) {
@@ -533,8 +534,7 @@ function parseRCSB (item) {
       if (item.personnes[0].siegeSocial.etranger) {
         ret.adresseSiegeSocial_complGeographique = item.personnes[0].siegeSocial.etranger.adresse
         ret.adresseSiegeSocial_pays = item.personnes[0].siegeSocial.etranger.pays ? item.personnes[0].siegeSocial.etranger.pays : ''
-      }
-      if (item.personnes[0].siegeSocial.france) {
+      } else if (item.personnes[0].siegeSocial.france) {
         ret.adresseSiegeSocial_pays = item.personnes[0].siegeSocial.pays
         ret.adresseSiegeSocial_numeroVoie = item.personnes[0].siegeSocial.france.numeroVoie
         ret.adresseSiegeSocial_typeVoie = item.personnes[0].siegeSocial.france.typeVoie
@@ -554,16 +554,23 @@ function parseRCSB (item) {
         ret.adresseEtab_complGeographique = item.personnes[0].etablissementPrincipal.france.complGeographique
         ret.adresseEtab_codePostal = item.personnes[0].etablissementPrincipal.france.codePostal
         ret.adresseEtab_ville = item.personnes[0].etablissementPrincipal.france.ville
+      } else if (item.personnes[0].etablissementPrincipal.etranger) {
+        ret.adresseEtab_complGeographique = item.personnes[0].etablissementPrincipal.etranger.adresse
       }
     }
     if (item.personnes[0].adresse) {
-      ret.adressePers_pays = item.personnes[0].adresse.pays
-      ret.adressePers_numeroVoie = item.personnes[0].adresse.numeroVoie
-      ret.adressePers_nomVoie = item.personnes[0].adresse.nomVoie
-      ret.adressePers_typeVoie = item.personnes[0].adresse.typeVoie
-      ret.adressePers_complGeographique = item.personnes[0].adresse.complGeographique
-      ret.adressePers_codePostal = item.personnes[0].adresse.codePostal
-      ret.adressePers_ville = item.personnes[0].adresse.ville
+      if (item.personnes[0].adresse.etranger) {
+        ret.adressePers_pays = item.personnes[0].adresse.etranger.pays ? item.personnes[0].adresse.etranger.pays : item.personnes[0].adresse.pays
+        ret.adressePers_complGeographique = item.personnes[0].adresse.etranger.complGeographique
+      } else if (item.personnes[0].adresse.france) {
+        ret.adressePers_pays = item.personnes[0].adresse.pays
+        ret.adressePers_numeroVoie = item.personnes[0].adresse.france.numeroVoie
+        ret.adressePers_nomVoie = item.personnes[0].adresse.france.nomVoie
+        ret.adressePers_typeVoie = item.personnes[0].adresse.france.typeVoie
+        ret.adressePers_complGeographique = item.personnes[0].adresse.france.complGeographique
+        ret.adressePers_codePostal = item.personnes[0].adresse.france.codePostal
+        ret.adressePers_ville = item.personnes[0].adresse.france.ville
+      }
     }
   }
   return ret
@@ -606,7 +613,7 @@ function parseBILAN (item) {
         ret.adressePers_numeroVoie = item.personnes[0].adresse.france.numeroVoie
         ret.adressePers_nomVoie = item.personnes[0].adresse.france.nomVoie
         ret.adressePers_typeVoie = item.personnes[0].adresse.france.typeVoie
-        ret.adressePers_complGeographique = item.personnes[0].adresse.france.complGeographique ? item.adresse.france.complGeographique : item.adresse.france.localite
+        ret.adressePers_complGeographique = item.personnes[0].adresse.france.complGeographique
         ret.adressePers_codePostal = item.personnes[0].adresse.france.codePostal
         ret.adressePers_ville = item.personnes[0].adresse.france.ville
       }
@@ -663,7 +670,6 @@ function parsePCL (item) {
     jugementAnnule_famille: '',
     jugementAnnule_nature: ''
   }
-  
   ret.nonInscrit = item.nonInscrit ? item.nonInscrit : undefined
   if (item.adresse) {
     if (item.adresse.etranger) {
@@ -680,7 +686,6 @@ function parsePCL (item) {
       ret.adressePers_ville = item.adresse.france.ville
     }
   }
-  
   if (item.jugement) {
     ret.jugement_famille = item.jugement[0].famille
     ret.jugement_nature = item.jugement[0].nature
@@ -715,7 +720,7 @@ function parsePCL (item) {
     ret.inscription_code = item.personnes[0].immatriculation.codeRCS
     ret.inscription_nomGreffeImmat = item.personnes[0].immatriculation.nomGreffeImmat
   }
-  if ( item.parutionAvisPrecedent) {
+  if (item.parutionAvisPrecedent) {
     ret.parutionAvisPrecedent_dateParution = item.parutionAvisPrecedent.dateParution
     ret.parutionAvisPrecedent_numeroAnnonce = item.parutionAvisPrecedent.numeroAnnonce
     ret.parutionAvisPrecedent_parution = item.parutionAvisPrecedent.parution
@@ -726,13 +731,12 @@ function parsePCL (item) {
     ret.jugementAnnule_famille = item.jugementAnnule.famille
     ret.jugementAnnule_nature = item.jugementAnnule.nature
   }
-  
   return ret
 }
 
 function processFile (type, stream, tmpDir, processingConfig) {
   return function (name, cb) {
-    // console.log(name)
+    console.log(name)
     parseFile(name, type, tmpDir, (err, items) => {
       if (err) return cb(err)
       async.map(items, (item, cb) => {
