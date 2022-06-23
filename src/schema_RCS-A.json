@@ -45,7 +45,8 @@
         "key": "adresseEtab_codePostal",
         "title": "Code Postal Etablissement",
         "description": "adresseEtab_codePostal",
-        "type": "string"
+        "type": "string",
+        "ignoreDetection": true
     },
     {
         "key": "adresseEtab_ville",
@@ -85,7 +86,7 @@
     },
     {
         "key": "capital_capitalVariable",
-        "title": "Capital varialble",
+        "title": "Capital variable",
         "description": "capital_capitalVariable",
         "type": "string"
     },
@@ -123,7 +124,8 @@
         "key": "adressePers_codePostal",
         "title": "Code Postal Personnes",
         "description": "adressePers_codePostal",
-        "type": "number"
+        "type": "string",
+        "ignoreDetection": true
     },
     {
         "key": "adressePers_ville",

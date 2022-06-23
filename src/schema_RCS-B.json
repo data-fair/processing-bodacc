@@ -39,7 +39,8 @@
         "key": "adresseSiegeSocial_codePostal",
         "title": "adresseSiegeSocial_codePostal",
         "description": "adresseSiegeSocial_codePostal",
-        "type": "string"
+        "type": "string",
+        "ignoreDetection": true
     },
     {
         "key": "adresseSiegeSocial_ville",
@@ -81,7 +82,8 @@
         "key": "adresseEtab_codePostal",
         "title": "Code Postal Etablissement",
         "description": "adresseEtab_codePostal",
-        "type": "string"
+        "type": "string",
+        "ignoreDetection": true
     },
     {
         "key": "adresseEtab_ville",
@@ -107,7 +109,6 @@
         "description": "prenomPers",
         "type": "string"
     },
-
     {
         "key": "adressePers_pays",
         "title": "Pays Personnes",
@@ -142,7 +143,8 @@
         "key": "adressePers_codePostal",
         "title": "Code Postal Personnes",
         "description": "adressePers_codePostal",
-        "type": "string"
+        "type": "string",
+        "ignoreDetection": true
     },
     {
         "key": "adressePers_ville",
@@ -182,7 +184,7 @@
     },
     {
         "key": "capital_capitalVariable",
-        "title": "Capital varialble",
+        "title": "Capital variable",
         "description": "capital_capitalVariable",
         "type": "string"
     },

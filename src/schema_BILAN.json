@@ -39,7 +39,8 @@
         "key": "adressePers_codePostal",
         "title": "Code Postal Personnes",
         "description": "adressePers_codePostal",
-        "type": "string"
+        "type": "string",
+        "ignoreDetection": true
     },
     {
         "key": "adressePers_ville",

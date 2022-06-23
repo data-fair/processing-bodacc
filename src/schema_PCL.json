@@ -51,7 +51,8 @@
         "key": "adressePers_codePostal",
         "title": "adressePers_codePostal",
         "description": "adressePers_codePostal",
-        "type": "number"
+        "type": "string",
+        "ignoreDetection": true
     },
     {
         "key": "adressePers_ville",
