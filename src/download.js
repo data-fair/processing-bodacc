@@ -46,7 +46,7 @@ module.exports = async (pluginConfig, processingConfig, tmpDir = 'data', axios, 
     }
     extractFiles(tmpDir, '.taz')
   }
-  setTimeout(10000)
+  sleep(10000)
   fs.readdir(tmpDir, (err, files) => {
     if (err) {
       console.log(err)
@@ -54,7 +54,7 @@ module.exports = async (pluginConfig, processingConfig, tmpDir = 'data', axios, 
       files.forEach(async file => {
         if (file.endsWith('.xml') === false) {
           const filePath = tmpDir + '/' + file
-          const xmlFilePath = `${tmpDir}/${file.replace(endName, '')}.xml`
+          const xmlFilePath = `${tmpDir}/${file.replace('.taz', '')}.xml`
           console.log(`Extract ${file} -> ${xmlFilePath}`)
           try {
             await decompress(filePath, tmpDir).then(files => {
