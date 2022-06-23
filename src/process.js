@@ -134,7 +134,7 @@ function fixDate (dateStr) {
 }
 
 function parseFile (name, type, tmpDir, cb) {
-  const content = fs.readFileSync(path.join(tmpDir, name), 'latin1')
+  const content = fs.readFileSync(path.join(tmpDir, name), 'utf-8')
   if (!content) {
     console.warn('File ' + name + ' is empty, this is weird !')
     return cb(null, [])
@@ -349,6 +349,12 @@ function parseFile (name, type, tmpDir, cb) {
             data.jugementAnnule = avis.jugementAnnule
             delete avis.jugementAnnule
           }
+          if (avis.numeroImmatriculation){
+            data.numeroImmatriculation.numeroIdentificationRCS = avis.numeroIdentification
+            data.numeroImmatriculation.codeRCS = avis.codeRCS
+            data.numeroImmatriculation.nomGreffeImmat = avis.nomGreffeImmat
+            delete avis.numeroImmatriculation
+          }
 
           assertEmpty(avis)
         } catch (err) {
@@ -367,7 +373,6 @@ function parseFile (name, type, tmpDir, cb) {
 }
 const tab = []
 function parseRCSA (item, type) {
-  // console.log(item)
   const ret = {
     // etablissements
     origineFonds: '',
@@ -428,10 +433,14 @@ function parseRCSA (item, type) {
   }
 
   if (item.personnes && item.personnes.length) {
-    ret.capital_devise = item.personnes[0].capital ? item.personnes[0].capital.capital_devise : ''
-    ret.capital_montant = item.personnes[0].capital ? item.personnes[0].capital.capital_montant : ''
-    ret.capital_capitalVariable = item.personnes[0].capital ? item.personnes[0].capital.capital_capitalVariable : ''
+    ret.capital_devise = item.personnes[0].capital ? item.personnes[0].capital.devise : ''
+    ret.capital_montant = item.personnes[0].capital ? item.personnes[0].capital.montant : ''
+    ret.capital_capitalVariable = item.personnes[0].capital ? item.personnes[0].capital.capitalVariable : ''
     if (item.personnes[0].adresse) {
+      if (item.personnes[0].adresse.etranger) {
+        ret.adresseSiegeSocial_complGeographique = item.personnes[0].adresse.etranger.adresse
+        ret.adresseSiegeSocial_pays = item.personnes[0].adresse.etranger.pays ? item.personnes[0].adresse.etranger.pays : ''
+      }
       ret.adressePers_pays = item.personnes[0].adresse.pays
       ret.adressePers_numeroVoie = item.personnes[0].adresse.numeroVoie
       ret.adressePers_typeVoie = item.personnes[0].adresse.typeVoie
@@ -485,7 +494,9 @@ function parseRCSB (item) {
     denomination: '',
     formeJuridique: '',
     administration: '',
-    capital: '',
+    capital_devise: '',
+    capital_montant: '',
+    capital_capitalVariable: '',
     sigle: '',
     immatriculation_numeroIdentification: '',
     immatriculation_codeRCS: '',
@@ -501,14 +512,15 @@ function parseRCSB (item) {
   }
   if (item.personnes && item.personnes.length) {
     ret.activite = item.personnes[0].activite
-    ret.siegeSocial = item.personnes[0].siegeSocial ? item.personnes[0].siegeSocial : ''
     ret.typePers = item.personnes[0].type
     ret.nomPers = item.personnes[0].nom
     ret.prenomPers = item.personnes[0].prenom ? item.personnes[0].prenom[0] : undefined
     ret.denomination = item.personnes[0].denomination
     ret.formeJuridique = item.personnes[0].formeJuridique
     ret.administration = item.personnes[0].administration
-    ret.capital = item.personnes[0].capital
+    ret.capital_devise = item.personnes[0].capital ? item.personnes[0].capital.devise : ''
+    ret.capital_montant = item.personnes[0].capital ? item.personnes[0].capital.montant : ''
+    ret.capital_capitalVariable = item.personnes[0].capital ? item.personnes[0].capital.capitalVariable : ''
     ret.sigle = item.personnes[0].sigle
     if (item.personnes[0].immatriculation) {
       ret.immatriculation_numeroIdentification = item.personnes[0].immatriculation.numeroIdentification
@@ -518,23 +530,31 @@ function parseRCSB (item) {
     ret.siren = item.personnes[0].siren
     // SiegeSocial
     if (item.personnes[0].siegeSocial) {
-      ret.adresseSiegeSocial_pays = item.personnes[0].siegeSocial.pays
-      ret.adresseSiegeSocial_numeroVoie = item.personnes[0].siegeSocial.numeroVoie
-      ret.adresseSiegeSocial_typeVoie = item.personnes[0].siegeSocial.typeVoie
-      ret.adresseSiegeSocial_nomVoie = item.personnes[0].siegeSocial.nomVoie
-      ret.adresseSiegeSocial_complGeographique = item.personnes[0].siegeSocial.complGeographique
-      ret.adresseSiegeSocial_codePostal = item.personnes[0].siegeSocial.codePostal
-      ret.adresseSiegeSocial_ville = item.personnes[0].siegeSocial.ville
+      if (item.personnes[0].siegeSocial.etranger) {
+        ret.adresseSiegeSocial_complGeographique = item.personnes[0].siegeSocial.etranger.adresse
+        ret.adresseSiegeSocial_pays = item.personnes[0].siegeSocial.etranger.pays ? item.personnes[0].siegeSocial.etranger.pays : ''
+      }
+      if (item.personnes[0].siegeSocial.france) {
+        ret.adresseSiegeSocial_pays = item.personnes[0].siegeSocial.pays
+        ret.adresseSiegeSocial_numeroVoie = item.personnes[0].siegeSocial.france.numeroVoie
+        ret.adresseSiegeSocial_typeVoie = item.personnes[0].siegeSocial.france.typeVoie
+        ret.adresseSiegeSocial_nomVoie = item.personnes[0].siegeSocial.france.nomVoie
+        ret.adresseSiegeSocial_complGeographique = item.personnes[0].siegeSocial.france.complGeographique ? item.personnes[0].siegeSocial.france.complGeographique : item.personnes[0].siegeSocial.france.localite
+        ret.adresseSiegeSocial_codePostal = item.personnes[0].siegeSocial.france.codePostal
+        ret.adresseSiegeSocial_ville = item.personnes[0].siegeSocial.france.ville
+      }
     }
     // Etablissement
     if (item.personnes[0].etablissementPrincipal) {
       ret.adresseEtab_pays = item.personnes[0].etablissementPrincipal.pays
-      ret.adresseEtab_numeroVoie = item.personnes[0].etablissementPrincipal.numeroVoie
-      ret.adresseEtab_typeVoie = item.personnes[0].etablissementPrincipal.typeVoie
-      ret.adresseEtab_nomVoie = item.personnes[0].etablissementPrincipal.nomVoie
-      ret.adresseEtab_complGeographique = item.personnes[0].etablissementPrincipal.complGeographique
-      ret.adresseEtab_codePostal = item.personnes[0].etablissementPrincipal.codePostal
-      ret.adresseEtab_ville = item.personnes[0].etablissementPrincipal.ville
+      if (item.personnes[0].etablissementPrincipal.france) {
+        ret.adresseEtab_numeroVoie = item.personnes[0].etablissementPrincipal.france.numeroVoie
+        ret.adresseEtab_typeVoie = item.personnes[0].etablissementPrincipal.france.typeVoie
+        ret.adresseEtab_nomVoie = item.personnes[0].etablissementPrincipal.france.nomVoie
+        ret.adresseEtab_complGeographique = item.personnes[0].etablissementPrincipal.france.complGeographique
+        ret.adresseEtab_codePostal = item.personnes[0].etablissementPrincipal.france.codePostal
+        ret.adresseEtab_ville = item.personnes[0].etablissementPrincipal.france.ville
+      }
     }
     if (item.personnes[0].adresse) {
       ret.adressePers_pays = item.personnes[0].adresse.pays
@@ -577,13 +597,19 @@ function parseBILAN (item) {
   if (item.personnes && item.personnes.length) {
     ret.typePers = item.personnes[0].type
     if (item.personnes[0].adresse) {
-      ret.adressePers_pays = item.personnes[0].adresse.pays
-      ret.adressePers_numeroVoie = item.personnes[0].adresse.numeroVoie
-      ret.adressePers_nomVoie = item.personnes[0].adresse.nomVoie
-      ret.adressePers_typeVoie = item.personnes[0].adresse.typeVoie
-      ret.adressePers_complGeographique = item.personnes[0].adresse.complGeographique
-      ret.adressePers_codePostal = item.personnes[0].adresse.codePostal
-      ret.adressePers_ville = item.personnes[0].adresse.ville
+      if (item.personnes[0].adresse.etranger) {
+        ret.adressePers_complGeographique = item.personnes[0].adresse.etranger.adresse
+        ret.adressePers_pays = item.personnes[0].adresse.etranger.pays ? item.personnes[0].adresse.etranger.pays : ''
+      }
+      if (item.personnes[0].adresse.france) {
+        ret.adressePers_pays = item.personnes[0].adresse.pays
+        ret.adressePers_numeroVoie = item.personnes[0].adresse.france.numeroVoie
+        ret.adressePers_nomVoie = item.personnes[0].adresse.france.nomVoie
+        ret.adressePers_typeVoie = item.personnes[0].adresse.france.typeVoie
+        ret.adressePers_complGeographique = item.personnes[0].adresse.france.complGeographique ? item.adresse.france.complGeographique : item.adresse.france.localite
+        ret.adressePers_codePostal = item.personnes[0].adresse.france.codePostal
+        ret.adressePers_ville = item.personnes[0].adresse.france.ville
+      }
     }
     ret.denomination = item.personnes[0].denomination
     ret.formeJuridique = item.personnes[0].formeJuridique
@@ -599,7 +625,7 @@ function parseBILAN (item) {
 }
 
 function parsePCL (item) {
-  // console.log(item)
+  // if (item.annonce.nojo === '002021123000064') console.log(item)
   const ret = {
     typePers: '',
     nomPers: '',
@@ -611,10 +637,11 @@ function parsePCL (item) {
     adressePers_complGeographique: '',
     adressePers_codePostal: '',
     adressePers_ville: '',
+    immatriculation_numeroIdentification: '',
+    immatriculation_codeRCS: '',
+    immatriculation_nomGreffeImmat: '',
     formeJuridique: '',
     denomination: '',
-    nom: '',
-    prenom: '',
     nonInscrit: '',
     identifiantClient: '', // Precedents exploitants
     siren: '',
@@ -624,28 +651,36 @@ function parsePCL (item) {
     jugement_date: '',
     jugement_complementJugement: '',
     enseigne: '',
-    inscriptionRM_numeroIdentificationRM: '',
-    inscriptionRM_codeRM: '',
-    inscriptionRM_numeroDepartement: '',
+    inscription_numeroIdentification: '',
+    inscription_code: '',
+    inscription_numeroDepartement: '',
+    inscription_nomGreffeImmat: '',
     parutionAvisPrecedent_dateParution: '',
     parutionAvisPrecedent_numeroAnnonce: '',
     parutionAvisPrecedent_parution: '',
     parutionAvisPrecedent_type: '',
     parutionAvisPrecedent__id: '',
-    personnes: '',
     jugementAnnule_famille: '',
     jugementAnnule_nature: ''
   }
+  
   ret.nonInscrit = item.nonInscrit ? item.nonInscrit : undefined
   if (item.adresse) {
-    ret.adressePers_pays = item.adresse.pays
-    ret.adressePers_numeroVoie = item.adresse.numeroVoie
-    ret.adressePers_typeVoie = item.adresse.typeVoie
-    ret.adressePers_nomVoie = item.adresse.nomVoie
-    ret.adressePers_complGeographique = item.adresse.complGeographique
-    ret.adressePers_codePostal = item.adresse.codePostal
-    ret.adressePers_ville = item.adresse.ville
+    if (item.adresse.etranger) {
+      ret.adressePers_complGeographique = item.adresse.etranger.adresse
+      ret.adressePers_pays = item.adresse.etranger.pays ? item.adresse.etranger.pays : item.adresse.pays
+    }
+    if (item.adresse.france) {
+      ret.adressePers_pays = item.adresse.pays
+      ret.adressePers_numeroVoie = item.adresse.france.numeroVoie
+      ret.adressePers_typeVoie = item.adresse.france.typeVoie
+      ret.adressePers_nomVoie = item.adresse.france.nomVoie
+      ret.adressePers_complGeographique = item.adresse.france.complGeographique ? item.adresse.france.complGeographique : item.adresse.france.localite
+      ret.adressePers_codePostal = item.adresse.france.codePostal
+      ret.adressePers_ville = item.adresse.france.ville
+    }
   }
+  
   if (item.jugement) {
     ret.jugement_famille = item.jugement[0].famille
     ret.jugement_nature = item.jugement[0].nature
@@ -660,22 +695,38 @@ function parsePCL (item) {
       ret.formeJuridique = item.pers.formeJuridique
     }
     if (ret.typePers.match('Physique')) {
-      ret.denomination = item.personnes[0].nom
-      ret.formeJuridique = item.personnes[0].prenom[0]
+      ret.nomPers = item.personnes[0].nom
+      ret.prenomPers = item.personnes[0].prenom[0]
+    }
+    if (item.personnes[0].immatriculation) {
+      ret.immatriculation_numeroIdentification = item.personnes[0].immatriculation.numeroIdentification
+      ret.immatriculation_codeRCS = item.personnes[0].immatriculation.codeRCS
+      ret.immatriculation_nomGreffeImmat = item.personnes[0].immatriculation.nomGreffeImmat
     }
   }
-
   ret.enseigne = item.enseigne ? item.enseigne : undefined
   if (item.inscriptionRM) {
-    ret.inscriptionRM_numeroIdentificationRM = item.inscriptionRM.numeroIdentificationRM
-    ret.inscriptionRM_codeRM = item.inscriptionRM.codeRM
-    ret.inscriptionRM_numeroDepartement = item.inscriptionRM.numeroDepartement
+    ret.inscription_numeroIdentification = item.inscriptionRM.numeroIdentificationRM
+    ret.inscription_code = item.inscriptionRM.codeRM
+    ret.inscription_numeroDepartement = item.inscriptionRM.numeroDepartement
   }
-  ret.parutionAvisPrecedent = item.parutionAvisPrecedent ? item.parutionAvisPrecedent : undefined
+  if (item.inscriptionRCS) {
+    ret.inscription_numeroIdentification = item.personnes[0].immatriculation.numeroIdentification
+    ret.inscription_code = item.personnes[0].immatriculation.codeRCS
+    ret.inscription_nomGreffeImmat = item.personnes[0].immatriculation.nomGreffeImmat
+  }
+  if ( item.parutionAvisPrecedent) {
+    ret.parutionAvisPrecedent_dateParution = item.parutionAvisPrecedent.dateParution
+    ret.parutionAvisPrecedent_numeroAnnonce = item.parutionAvisPrecedent.numeroAnnonce
+    ret.parutionAvisPrecedent_parution = item.parutionAvisPrecedent.parution
+    ret.parutionAvisPrecedent_type = item.parutionAvisPrecedent.type
+    ret.parutionAvisPrecedent__id = item.parutionAvisPrecedent._id
+  }
   if (item.jugementAnnule) {
     ret.jugementAnnule_famille = item.jugementAnnule.famille
     ret.jugementAnnule_nature = item.jugementAnnule.nature
   }
+  
   return ret
 }
 
@@ -726,13 +777,11 @@ function processFile (type, stream, tmpDir, processingConfig) {
 
 // Ventes, cessions, créations d'établissements, etc..
 async function processFiles (tmpDir, type, processingConfig, log) {
-  // const globalHeader = ['parution', 'dateParution', 'type', '_id', 'numeroAnnonce', 'nojo', 'numeroDepartement', 'tribunal']
   await log.info(`Traitement du fichier BODAAC : ${type}. Type : ${processingConfig.typeFile}`)
   const globalHeader = require('./schema_global.json').map((elem) => elem.key)
   const typeHeader = require(`./schema_${type}.json`).map((elem) => elem.key)
 
   const header = globalHeader.concat(typeHeader)
-  console.log(globalHeader.length,typeHeader.length,header.length)
   const writeStream = fs.createWriteStream(path.join(tmpDir, processingConfig.typeFile.toUpperCase() + '.csv'))
   writeStream.write(header.map((elem) => `"${elem}"`).join(',') + endOfLine)
   const rcsFiles = fs.readdirSync(tmpDir).filter(file => file.indexOf(type) === 0 && file.indexOf('.xml') !== -1)
@@ -751,7 +800,6 @@ async function processFiles (tmpDir, type, processingConfig, log) {
     })
   }
   await waitForStreamClose(writeStream)
-  console.log(header.length)
 }
 
 module.exports = async (processingConfig, tmpDir, axios, log, patchConfig) => {
