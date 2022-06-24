@@ -49,9 +49,7 @@
         "type": "string",
         "title": "Bulletin à traiter",
         "oneOf": [
-          { "const": "vente", "title": "Ventes et cessions" },
-          { "const": "immatriculation", "title": "Immatriculations" },
-          { "const": "creation", "title": "Créations" },
+          { "const": "bodaccA", "title": "Bodacc A (Ventes et cessions, Créations, Immatriculations)" },
           { "const": "prevention", "title": "Prévention des difficultés des entreprises ou précédures collectives" },
           { "const": "modification", "title": "Modifications générales et radiations" },
           { "const": "compte", "title": "Dépôts des comptes annuels" }

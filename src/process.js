@@ -349,7 +349,7 @@ function parseFile (name, type, tmpDir, cb) {
             data.jugementAnnule = avis.jugementAnnule
             delete avis.jugementAnnule
           }
-          if (avis.numeroImmatriculation){
+          if (avis.numeroImmatriculation) {
             data.numeroImmatriculation.numeroIdentificationRCS = avis.numeroIdentification
             data.numeroImmatriculation.codeRCS = avis.codeRCS
             data.numeroImmatriculation.nomGreffeImmat = avis.nomGreffeImmat
@@ -372,7 +372,7 @@ function parseFile (name, type, tmpDir, cb) {
   })
 }
 const tab = []
-function parseRCSA (item, type) {
+function parseRCSA (item) {
   const ret = {
     // etablissements
     origineFonds: '',
@@ -461,8 +461,7 @@ function parseRCSA (item, type) {
       ret.immatriculation_nomGreffeImmat = item.personnes[0].immatriculation.nomGreffeImmat
     }
   }
-  
-  if (ret.typeActe.toUpperCase().includes(type.toUpperCase())) return ret
+  return ret
 }
 function parseRCSB (item) {
   const ret = {
@@ -734,9 +733,9 @@ function parsePCL (item) {
   return ret
 }
 
-function processFile (type, stream, tmpDir, processingConfig) {
+function processFile (type, stream, tmpDir) {
   return function (name, cb) {
-    console.log(name)
+    // console.log(name)
     parseFile(name, type, tmpDir, (err, items) => {
       if (err) return cb(err)
       async.map(items, (item, cb) => {
@@ -753,7 +752,7 @@ function processFile (type, stream, tmpDir, processingConfig) {
 
         let itemType
         try {
-          if (type === 'RCS-A') itemType = parseRCSA(item.annonce, processingConfig.typeFile)
+          if (type === 'RCS-A') itemType = parseRCSA(item.annonce)
           if (type === 'RCS-B') itemType = parseRCSB(item.annonce)
           if (type === 'BILAN') itemType = parseBILAN(item.annonce)
           if (type === 'PCL') itemType = parsePCL(item.annonce)
@@ -792,7 +791,7 @@ async function processFiles (tmpDir, type, processingConfig, log) {
 
   console.log(`found ${rcsFiles.length} ${type} files`)
   rcsFiles.map(function (file) {
-    processFile(type, writeStream, tmpDir, processingConfig)(file, null)
+    processFile(type, writeStream, tmpDir)(file, null)
     return null
   })
   async function waitForStreamClose (stream) {
